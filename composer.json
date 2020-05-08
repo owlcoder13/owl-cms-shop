@@ -9,11 +9,11 @@
     ],
     "minimum-stability": "dev",
     "require": {
-        "../../../vendor/owlcoder/common": "*",
-        "../../../vendor/owlcoder/forms": "*",
+        "owlcoder/common": "*",
+        "owlcoder/forms": "*",
         "owlcoder/laravel-meta": "*",
-        "../../../vendor/owlcoder/block": "*",
-        "../../../vendor/owlcoder/cms": "*"
+        "owlcoder/block": "*",
+        "owlcoder/cms": "*"
     },
     "autoload": {
         "psr-4": {
