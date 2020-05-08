@@ -1,0 +1,23 @@
+{
+    "name": "owlcoder/cms-shop",
+    "description": "Cms e-commerce",
+    "authors": [
+        {
+            "name": "Mikhail",
+            "email": "owlcoder1@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "../../../vendor/owlcoder/common": "*",
+        "../../../vendor/owlcoder/forms": "*",
+        "owlcoder/laravel-meta": "*",
+        "../../../vendor/owlcoder/block": "*",
+        "../../../vendor/owlcoder/cms": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Owlcoder\\CmsShop\\": "src/"
+        }
+    }
+}
