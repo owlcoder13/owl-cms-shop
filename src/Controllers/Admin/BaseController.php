@@ -22,9 +22,9 @@ class BaseController extends Controller
         $model = $this->modelClass::find($request->route('id'));
         $form = new $this->formClass([], $model);
 
-        if ($request->method() == 'post') {
+        if ($request->method() == 'POST') {
             if ($form->load($_POST, $request->files->all()) && $form->save()) {
-                return redirect(route(route('cms-shop.admin.' . $this->baseName . '.update'), ['id' => $model->id]));
+                return redirect(route('cms-shop.' . $this->baseName . '.update', ['id' => $model->id]));
             }
         }
 
@@ -39,9 +39,9 @@ class BaseController extends Controller
         $model = new $this->modelClass();
         $form = new $this->formClass([], $model);
 
-        if ($request->method() == 'post') {
+        if ($request->method() == 'POST') {
             if ($form->load($_POST, $request->files->all()) && $form->save()) {
-                return redirect(route(route('cms-shop.admin.' . $this->baseName . '.update'), ['id' => $model->id]));
+                return redirect(route('cms-shop.' . $this->baseName . '.update', ['id' => $model->id]));
             }
         }
 

@@ -24,5 +24,9 @@ class CmsShopProvider extends ServiceProvider
             'name' => 'Аттрибуты',
             'url' => '/admin/shop/attribute/',
         ]);
+        app('admin-menu')->add([
+            'name' => 'Категории товаров',
+            'url' => '/admin/shop/product-category/',
+        ]);
     }
 }

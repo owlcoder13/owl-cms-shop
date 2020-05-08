@@ -16,7 +16,7 @@ class CreateShop extends Migration
         /**
          * Categories
          */
-        Schema::create('category', function (Blueprint $table) {
+        Schema::create('product_category', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->timestamps();
 
@@ -28,7 +28,7 @@ class CreateShop extends Migration
             $table->text('description')->nullable();
 
             $table->unsignedBigInteger('parent_id')->nullable();
-            $table->foreign('parent_id')->references('id')->on('category');
+            $table->foreign('parent_id')->references('id')->on('product_category');
         });
 
         /**
@@ -112,7 +112,7 @@ class CreateShop extends Migration
             $table->index('code')->nullable();
 
             $table->unsignedBigInteger('category_id')->nullable();
-            $table->foreign('category_id')->references('id')->on('category');
+            $table->foreign('category_id')->references('id')->on('product_category');
 
             $table->unsignedBigInteger('product_type_id')->nullable(true);
             $table->foreign('product_type_id')->references('id')->on('product_type');

@@ -24,5 +24,10 @@ class CmsShopRoute
         Route::any('/admin/shop/attribute/create', '\Owlcoder\CmsShop\Controllers\Admin\AttributeController@create')->name('cms-shop.attribute.create');
         Route::any('/admin/shop/attribute/{id}/update', '\Owlcoder\CmsShop\Controllers\Admin\AttributeController@update')->name('cms-shop.attribute.update');
         Route::get('/admin/shop/attribute/{id}/delete', '\Owlcoder\CmsShop\Controllers\Admin\AttributeController@delete')->name('cms-shop.attribute.delete');
+
+        Route::get('/admin/shop/product-category', '\Owlcoder\CmsShop\Controllers\Admin\ProductCategoryController@index')->name('cms-shop.product-category.index');
+        Route::any('/admin/shop/product-category/create', '\Owlcoder\CmsShop\Controllers\Admin\ProductCategoryController@create')->name('cms-shop.product-category.create');
+        Route::any('/admin/shop/product-category/{id}/update', '\Owlcoder\CmsShop\Controllers\Admin\ProductCategoryController@update')->name('cms-shop.product-category.update');
+        Route::get('/admin/shop/product-category/{id}/delete', '\Owlcoder\CmsShop\Controllers\Admin\ProductCategoryController@delete')->name('cms-shop.product-category.delete');
     }
 }

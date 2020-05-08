@@ -13,6 +13,8 @@ use App\BaseModel;
  */
 class Product extends BaseModel
 {
+    protected $table = 'product';
+
     public function productType()
     {
         return $this->belongsTo(ProductType::class, 'product_type_id');

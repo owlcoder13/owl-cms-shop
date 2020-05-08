@@ -2,12 +2,12 @@
 
 namespace Owlcoder\CmsShop\Controllers\Admin;
 
-use Illuminate\Routing\Controller;
+use Owlcoder\CmsShop\Forms\ProductForm;
+use Owlcoder\CmsShop\Models\Product;
 
-class ProductController extends Controller
+class ProductController extends BaseController
 {
-    public function index()
-    {
-        return view('cms-shop::admin.shop.index');
-    }
+    public $baseName = 'product';
+    public $modelClass = Product::class;
+    public $formClass = ProductForm::class;
 }
