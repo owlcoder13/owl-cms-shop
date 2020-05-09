@@ -1,0 +1,3 @@
+$.fn.productAdminSkus = function () {
+    alert();
+}

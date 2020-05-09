@@ -1,4 +1,4 @@
-@extends(config('cms.adminBaseView'))
+@extends('cms-shop::admin.shop.base')
 
 @section('content')
     <form action="" method="post" enctype="multipart/form-data">

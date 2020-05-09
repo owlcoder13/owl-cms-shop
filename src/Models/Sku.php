@@ -10,6 +10,8 @@ use App\BaseModel;
  */
 class Sku extends BaseModel
 {
+    protected $table = 'sku';
+
     public function attrs()
     {
         return $this->hasMany(SkuAttribute::class, 'sku_id');
