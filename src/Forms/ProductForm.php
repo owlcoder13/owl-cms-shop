@@ -15,8 +15,9 @@ class ProductForm extends Form
             'description',
             'code',
             'category_id' => [
+                'nullIfEmpty' => true,
                 'class' => SelectField::class,
-                'options'=>ProductCategory::all()->pluck('name', 'id'),
+                'options' => [null => null] + ProductCategory::all()->pluck('name', 'id')->toArray(),
             ],
             'product_type_id',
         ];
