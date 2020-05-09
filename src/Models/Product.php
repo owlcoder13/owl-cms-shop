@@ -10,6 +10,7 @@ use App\BaseModel;
  * @property array $params
  * @property Sku[] $skus
  * @property ProductAttribute[] $productAttributes
+ * @property AttributeItem[] $attributeItems
  *
  */
 class Product extends BaseModel
@@ -19,6 +20,18 @@ class Product extends BaseModel
     public function productType()
     {
         return $this->belongsTo(ProductType::class, 'product_type_id');
+    }
+
+    public function attributeItems()
+    {
+        return $this->hasManyThrough(
+            AttributeItem::class,
+            ProductAttribute::class,
+            'product_id',
+            'id',
+            'id',
+            'attribute_item_id'
+        );
     }
 
     public function productAttributes()
