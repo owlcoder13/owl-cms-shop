@@ -17,7 +17,7 @@ class ProductForm extends Form
 {
     public function getFields()
     {
-        return [
+        $fields = [
             'name',
             'description' => ['class' => EditorField::class],
             'code',
@@ -31,7 +31,10 @@ class ProductForm extends Form
                 'class' => SelectField::class,
                 'options' => [null => null] + ProductType::all()->pluck('name', 'id')->toArray(),
             ],
-            'attributes' => [
+        ];
+
+        if ( ! empty($this->instance->id)) {
+            $fields['attributes'] = [
                 'fetchData' => function ($field) {
                     $product = $field->instance;
                     $field->value = $product->params;
@@ -91,11 +94,15 @@ class ProductForm extends Form
                 },
                 'class' => DivField::class,
                 'func' => 'productAdminAttributes'
-            ],
+            ];
+
 //            'skus' => [
 //                'class' => DivField::class,
 //                'func' => 'productAdminSkus'
 //            ],
-        ];
+
+            return $fields;
+        }
+
     }
 }
