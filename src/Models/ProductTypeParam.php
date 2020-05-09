@@ -5,7 +5,9 @@ namespace Owlcoder\CmsShop\Models;
 use App\BaseModel;
 
 /**
- *  Class \Owlcoder\CmsShop\Models\ProductTypeParam */
+ *  Class \Owlcoder\CmsShop\Models\ProductTypeParam
+ * @property Attribute $attribute
+ */
 class ProductTypeParam extends BaseModel
 {
     const TYPE_DEFAULT = 10;

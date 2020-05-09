@@ -9,6 +9,7 @@ use App\BaseModel;
  * @property ProductType $productType
  * @property array $params
  * @property Sku[] $skus
+ * @property ProductAttribute[] $productAttributes
  *
  */
 class Product extends BaseModel
@@ -20,31 +21,37 @@ class Product extends BaseModel
         return $this->belongsTo(ProductType::class, 'product_type_id');
     }
 
+    public function productAttributes()
+    {
+        return $this->hasMany(ProductAttribute::class, 'product_id');
+    }
+
+    public function getProductTypeAttributesAttribute()
+    {
+        return $this->productType->productTypeParams;
+    }
+
     public function getParamsAttribute($extended = false)
     {
         $out = [];
 
-        $pt = ProductType::find($this->product_type_id);
+        $params = $this->productType->productTypeParams ?? [];
 
-        if ($pt == null) {
-            return $out;
-        }
-
-        foreach ($pt->params as $attribute) {
+        foreach ($params as $ptParam) {
 
             if ($extended) {
-                $out[$attribute->slug] = [];
-                $attributes = ProductAttribute::where('product_type_param_id', $attribute->id)->get();
+                $out[$ptParam->slug] = [];
+                $ptParams = ProductAttribute::where('product_type_param_id', $ptParam->id)->get();
                 /** @var ProductAttribute $one */
-                foreach ($attributes as $one) {
-                    $out[$attribute->slug][] = [
+                foreach ($ptParams as $one) {
+                    $out[$ptParam->slug][] = [
                         'id' => $one->id,
                         'slug' => $one->attributeItem->slug,
                     ];
                 }
             } else {
-                $ids = ProductAttribute::where('product_type_param_id', $attribute->id)->pluck('attribute_item_id');
-                $out[$attribute->slug] = $ids;
+                $ids = ProductAttribute::where('product_type_param_id', $ptParam->id)->pluck('attribute_item_id');
+                $out[$ptParam->slug] = $ids;
             }
 
         }
@@ -60,5 +67,38 @@ class Product extends BaseModel
     public function productImages()
     {
         return $this->hasMany(ProductImage::class, 'product_id');
+    }
+
+    /**
+     * @param $all
+     * @param array $item
+     * @param array $handledGroups
+     */
+    public function generateSkus($item = [], $handledGroups = [])
+    {
+        $all = $this->productType->productTypeParams;
+
+        $out = [];
+
+        foreach ($all as $groupKey => $attrGroup) {
+
+            if ($attrGroup->type != ProductTypeParam::TYPE_USE_SKU) {
+                continue;
+            }
+
+            if (in_array($groupKey, $handledGroups)) continue;
+            $handledGroups[] = $groupKey;
+
+            foreach ($attrGroup->attribute->items as $attributeItem) {
+                $item[$groupKey] = $attributeItem->slug;
+                $this->generateSkus($item, $handledGroups);
+
+                if (count($item) == count($all)) {
+                    $out[] = $item;
+                }
+            }
+        }
+
+        return $out;
     }
 }

@@ -17,4 +17,10 @@ class ProductType extends BaseModel
         return $this->hasMany(ProductTypeParam::class, 'product_type_id');
     }
 
+    public function getAttributesAttribute()
+    {
+        return $this->productTypeParams->pluck('attribute');
+    }
+
+
 }
