@@ -14,6 +14,7 @@
         'columns' => [
             'id',
             'name',
+            'productType.name',
             'slug',
         ],
     ]);

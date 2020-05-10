@@ -6,6 +6,9 @@ use App\BaseModel;
 
 /**
  *  Class \Owlcoder\CmsShop\Models\Product
+ *
+ * @property string $slug
+ *
  * @property ProductType $productType
  * @property array $params
  * @property Sku[] $skus

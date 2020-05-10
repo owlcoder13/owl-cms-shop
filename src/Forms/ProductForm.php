@@ -24,6 +24,7 @@ class ProductForm extends Form
             'name',
             'description' => ['class' => EditorField::class],
             'code',
+            'slug',
             'category_id' => [
                 'nullIfEmpty' => true,
                 'class' => SelectField::class,
