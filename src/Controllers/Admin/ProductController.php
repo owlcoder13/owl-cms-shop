@@ -16,4 +16,12 @@ class ProductController extends BaseController
         $model = Product::find($id);
         return $model->productType->attributes;
     }
+
+    public function skus($id)
+    {
+        $product = Product::with(['skus', 'skus.attrs'])->where('id', $id)->first();
+        print '<pre>';
+        print_r($product->skus->toArray());
+        exit();
+    }
 }

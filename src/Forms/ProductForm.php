@@ -9,6 +9,7 @@ use Owlcoder\CmsShop\Models\ProductCategory;
 use Owlcoder\CmsShop\Models\ProductCategoryBinding;
 use Owlcoder\CmsShop\Models\ProductType;
 use Owlcoder\CmsShop\Models\ProductTypeParam;
+use Owlcoder\CmsShop\Models\Sku;
 use Owlcoder\Forms\Fields\DivField;
 use Owlcoder\Forms\Fields\EditorField;
 use Owlcoder\Forms\Fields\ManyToManyCheckboxListField;
@@ -107,13 +108,35 @@ class ProductForm extends Form
                 'func' => 'productAdminAttributes'
             ];
 
-//            'skus' => [
+//            $fields['skus'] = [
 //                'class' => DivField::class,
-//                'func' => 'productAdminSkus'
-//            ],
+//                'func' => 'productAdminSkus',
+//                'canApply' => false,
+//                'getInputAttributes' => function ($field) {
+//                    $product = $field->instance;
+//
+//                    return [
+//                        'data-selected-params' => json_encode($product->getSkuParams()),
+//                    ];
+//                },
+//
+//                'fetchData' => function ($field) {
+//                    $data = Sku::with('skuAttributes')->where('product_id', $field->instance->id)->get()->toArray();
+//                    $field->value = $data;
+//                },
+//
+//                'afterSave' => function ($field) {
+//
+//                }
+//            ];
 
             return $fields;
         }
+    }
 
+    public function afterSave()
+    {
+        parent::afterSave();
+        $this->instance->generateSkus();
     }
 }
