@@ -34,6 +34,23 @@ class Product extends BaseModel
         );
     }
 
+    public function productCategoryBindings()
+    {
+        return $this->hasMany(ProductCategoryBinding::class, 'product_id');
+    }
+
+    public function categories()
+    {
+        return $this->hasManyThrough(
+            ProductCategory::class,
+            ProductCategoryBinding::class,
+            'product_id',
+            'id',
+            'id',
+            'category_id',
+        );
+    }
+
     public function productAttributes()
     {
         return $this->hasMany(ProductAttribute::class, 'product_id');

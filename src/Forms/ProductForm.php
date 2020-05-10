@@ -6,10 +6,12 @@ use Owlcoder\CmsShop\Models\AttributeItem;
 use Owlcoder\CmsShop\Models\Product;
 use Owlcoder\CmsShop\Models\ProductAttribute;
 use Owlcoder\CmsShop\Models\ProductCategory;
+use Owlcoder\CmsShop\Models\ProductCategoryBinding;
 use Owlcoder\CmsShop\Models\ProductType;
 use Owlcoder\CmsShop\Models\ProductTypeParam;
 use Owlcoder\Forms\Fields\DivField;
 use Owlcoder\Forms\Fields\EditorField;
+use Owlcoder\Forms\Fields\ManyToManyCheckboxListField;
 use Owlcoder\Forms\Fields\SelectField;
 use Owlcoder\Forms\Form;
 
@@ -30,6 +32,15 @@ class ProductForm extends Form
                 'nullIfEmpty' => true,
                 'class' => SelectField::class,
                 'options' => [null => null] + ProductType::all()->pluck('name', 'id')->toArray(),
+            ],
+            [
+                'middleAttribute' => 'productCategoryBindings',
+                'remoteModel' => ProductCategory::class,
+                'middleModel' => ProductCategoryBinding::class,
+                'toLocalKey' => 'product_id',
+                'toRemoteKey' => 'category_id',
+                'attribute' => 'categories',
+                'class' => ManyToManyCheckboxListField::class,
             ],
         ];
 
