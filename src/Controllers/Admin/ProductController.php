@@ -24,4 +24,10 @@ class ProductController extends BaseController
         print_r($product->skus->toArray());
         exit();
     }
+
+    public function qty($id)
+    {
+        $model = \App\Models\Product::find($id);
+        return view('cms-shop::admin.shop.product.qty', ['model' => $model]);
+    }
 }
