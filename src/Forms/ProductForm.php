@@ -2,6 +2,7 @@
 
 namespace Owlcoder\CmsShop\Forms;
 
+use Owlcoder\CmsShop\Forms\Fields\ProductPhotosField;
 use Owlcoder\CmsShop\Models\AttributeItem;
 use Owlcoder\CmsShop\Models\Product;
 use Owlcoder\CmsShop\Models\ProductAttribute;
@@ -46,6 +47,10 @@ class ProductForm extends Form
         ];
 
         if ( ! empty($this->instance->id)) {
+            $fields['productPhotos'] = [
+                'attribute' => 'productPhotos',
+                'class' => ProductPhotosField::class,
+            ];
             $fields['attributes'] = [
                 'fetchData' => function ($field) {
                     $product = $field->instance;
