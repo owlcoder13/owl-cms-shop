@@ -14,6 +14,8 @@ use App\BaseModel;
  * @property Sku[] $skus
  * @property ProductAttribute[] $productAttributes
  * @property AttributeItem[] $attributeItems
+ * @property ProductImage[] $productImages
+ * @property ProductImage $image
  *
  */
 class Product extends BaseModel
@@ -112,6 +114,13 @@ class Product extends BaseModel
     public function productImages()
     {
         return $this->hasMany(ProductImage::class, 'product_id');
+    }
+
+    public function getImageAttribute()
+    {
+        if (count($this->productImages) > 0) {
+            return $this->productImages[0]->image;
+        }
     }
 
     /**

@@ -3,6 +3,7 @@
 namespace Owlcoder\CmsShop\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Owlcoder\CmsShop\Services\CartService;
 
 class CmsShopProvider extends ServiceProvider
 {
@@ -16,17 +17,25 @@ class CmsShopProvider extends ServiceProvider
             'name' => 'Типы товаров',
             'url' => '/admin/shop/product-type/',
         ]);
+
         app('admin-menu')->add([
             'name' => 'Товары',
             'url' => '/admin/shop/product/',
         ]);
+
         app('admin-menu')->add([
             'name' => 'Аттрибуты',
             'url' => '/admin/shop/attribute/',
         ]);
+
         app('admin-menu')->add([
             'name' => 'Категории товаров',
             'url' => '/admin/shop/product-category/',
         ]);
+
+        $this->app->bind(CartService::class, function ($app) {
+            return new CartService($app->request);
+        });
+
     }
 }

@@ -102,39 +102,17 @@ class OrderAddressCart extends Migration
             $table->text("full_name")->nullable();
         });
 
-        Schema::create('cart', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->timestamps();
-
-            $table->unsignedBigInteger('user_id')->nullable();
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->string('user_hash')->nullable();
-
-            $table->integer('status')->default(10);
-        });
-
-        Schema::create('order_shipment', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->timestamps();
-
-            $table->string('name')->nullable();
-            $table->text('comment')->nullable();
-
-            $table->unsignedBigInteger('address_id')->nullable();
-            $table->foreign('address_id')->references('id')->on('address');
-        });
-
         Schema::create('order', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->timestamps();
 
             $table->boolean('main')->default(true);
+            $table->string('user_hash')->nullable()->index();
+
+            $table->integer('status')->default(10);
 
             $table->unsignedBigInteger('user_id')->nullable();
             $table->foreign('user_id')->references('id')->on('users');
-
-            $table->unsignedBigInteger('cart_id')->nullable();
-            $table->foreign('cart_id')->references('id')->on('cart');
 
             $table->unsignedBigInteger('address_id')->nullable();
             $table->foreign('address_id')->references('id')->on('address');
@@ -150,6 +128,36 @@ class OrderAddressCart extends Migration
 
             $table->string('promo')->nullable();
         });
+
+        Schema::create('order_invoice', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->timestamps();
+
+            $table->text('comment')->nullable();
+            $table->float('sum')->default(0);
+
+            $table->unsignedBigInteger('order_id')->nullable();
+            $table->foreign('order_id')->references('id')->on('order');
+
+            $table->unsignedBigInteger('address_id')->nullable();
+            $table->foreign('address_id')->references('id')->on('address');
+        });
+
+
+        Schema::create('order_shipment', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->timestamps();
+
+            $table->string('name')->nullable();
+            $table->text('comment')->nullable();
+
+            $table->unsignedBigInteger('order_id')->nullable();
+            $table->foreign('order_id')->references('id')->on('order');
+
+            $table->unsignedBigInteger('address_id')->nullable();
+            $table->foreign('address_id')->references('id')->on('address');
+        });
+
 
         Schema::create('order_item', function (Blueprint $table) {
             $table->bigIncrements('id');
@@ -179,6 +187,11 @@ class OrderAddressCart extends Migration
      */
     public function down()
     {
-        //
+        Schema::drop('order_item');
+        Schema::drop('order');
+        Schema::drop('order_shipment');
+        Schema::drop('order_invoice');
+//        Schema::drop('cart');
+        Schema::drop('address');
     }
 }

@@ -13,7 +13,8 @@ class BaseController extends Controller
 
     public function index(Request $request)
     {
-        $model = $this->modelClass::all();
+        $modelClass = $this->modelClass;
+        $model = $modelClass::query()->simplePaginate(20);
         return view('cms-shop::admin.shop.' . $this->baseName . '.index', ['model' => $model]);
     }
 
