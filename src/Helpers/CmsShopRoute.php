@@ -38,6 +38,7 @@ class CmsShopRoute
             Route::get('/shop/product/{id}/product-attributes', '\Owlcoder\CmsShop\Controllers\Admin\ProductController@productAttributes');
             Route::get('/shop/product/{id}/skus', '\Owlcoder\CmsShop\Controllers\Admin\ProductController@skus');
             Route::post('/shop/product/{id}/upload-photos', '\Owlcoder\CmsShop\Controllers\Admin\ProductController@uploadPhotos');
+            Route::get('/shop/product/delete-photo/{id}', '\Owlcoder\CmsShop\Controllers\Admin\ProductController@deletePhoto');
 
         });
     }

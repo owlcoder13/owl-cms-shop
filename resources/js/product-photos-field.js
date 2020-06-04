@@ -38,7 +38,7 @@ var addItem = function (data) {
     div.append(deleteButton)
 
     deleteButton.on('click', function () {
-        $.get('/admin/shop/product/' + id + '/upload-photos/' + data.image.id, function (data) {
+        $.get('/admin/shop/product/delete-photo/' + data.id, function (data) {
             if (data.success) {
                 div.remove();
             }

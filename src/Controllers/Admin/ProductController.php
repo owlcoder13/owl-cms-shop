@@ -43,8 +43,6 @@ class ProductController extends BaseController
 
         /** @var UploadedFile $file */
         foreach ($request->files->get('file') as $file) {
-
-
             $image = Image::CreateFromUploaded($file, '/uploads/products');
 
             $model = new ProductImage();
@@ -59,5 +57,15 @@ class ProductController extends BaseController
             'success' => count($out) > 0,
             'data' => $out,
         ]);
+    }
+
+    public function deletePhoto(Request $request)
+    {
+        $productPhoto = ProductImage::find($request->route('id'));
+
+        if ($productPhoto) {
+            $productPhoto->delete();
+            return response()->json(['success' => true]);
+        }
     }
 }
