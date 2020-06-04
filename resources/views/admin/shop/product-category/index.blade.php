@@ -15,6 +15,16 @@
             'id',
             'name',
             'slug',
+            [
+                'tdAttributes' => ['class' => 'text-right'],
+                'class' => \Owlcoder\Cms\Widgets\ButtonColumn::class,
+                'updateUrl' => function ($item) {
+                    return route('cms-shop.product-category.update', ['id' => $item->id]);
+                },
+                'deleteUrl' => function ($item) {
+                    return route('cms-shop.product-category.delete', ['id' => $item->id]);
+                }
+            ]
         ],
     ]);
     ?>
