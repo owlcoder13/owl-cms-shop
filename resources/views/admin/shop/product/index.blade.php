@@ -60,7 +60,7 @@
                 @endforeach
                 </tbody>
             </table>
-            {!! $model->links() !!}
+{{--            {!! $model->links() !!}--}}
         </div>
     </div>
 @stop

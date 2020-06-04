@@ -60,10 +60,13 @@ el.find('.files').on('change', function () {
     var formData = new FormData();
     formData.append('_token', $('[name="_token"]').val())
 
-    for (var i in fileList) {
+    console.log(fileList)
+    for (var i = 0; i < fileList.length; i++) {
         (function () {
-            var file = fileList[i];
-            formData.append('file[]', file);
+            if (Number.isInteger(i)) {
+                formData.append('file[]', fileList[i]);
+            }
+
         })()
     }
 

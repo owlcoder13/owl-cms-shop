@@ -66,6 +66,8 @@ class ProductForm extends Form
                     $data = json_decode($field->value, true);
                     $saved = [];
 
+                    $data = $data ?? [];
+
                     foreach ($data as $slug => $ids) {
                         foreach ($ids as $id) {
                             $ptp = ProductTypeParam::where('slug', $slug)->first();
