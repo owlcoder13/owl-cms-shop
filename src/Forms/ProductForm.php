@@ -2,6 +2,7 @@
 
 namespace Owlcoder\CmsShop\Forms;
 
+use Owlcoder\CmsShop\Forms\Fields\ProductPhotosField;
 use Owlcoder\CmsShop\Models\AttributeItem;
 use Owlcoder\CmsShop\Models\Product;
 use Owlcoder\CmsShop\Models\ProductAttribute;
@@ -9,7 +10,6 @@ use Owlcoder\CmsShop\Models\ProductCategory;
 use Owlcoder\CmsShop\Models\ProductCategoryBinding;
 use Owlcoder\CmsShop\Models\ProductType;
 use Owlcoder\CmsShop\Models\ProductTypeParam;
-use Owlcoder\CmsShop\Models\Sku;
 use Owlcoder\Forms\Fields\DivField;
 use Owlcoder\Forms\Fields\EditorField;
 use Owlcoder\Forms\Fields\ManyToManyCheckboxListField;
@@ -47,6 +47,10 @@ class ProductForm extends Form
         ];
 
         if ( ! empty($this->instance->id)) {
+            $fields['productPhotos'] = [
+                'attribute' => 'productPhotos',
+                'class' => ProductPhotosField::class,
+            ];
             $fields['attributes'] = [
                 'fetchData' => function ($field) {
                     $product = $field->instance;
@@ -109,30 +113,37 @@ class ProductForm extends Form
                 'func' => 'productAdminAttributes'
             ];
 
-//            $fields['skus'] = [
-//                'class' => DivField::class,
-//                'func' => 'productAdminSkus',
-//                'canApply' => false,
-//                'getInputAttributes' => function ($field) {
-//                    $product = $field->instance;
-//
-//                    return [
-//                        'data-selected-params' => json_encode($product->getSkuParams()),
-//                    ];
-//                },
-//
-//                'fetchData' => function ($field) {
-//                    $data = Sku::with('skuAttributes')->where('product_id', $field->instance->id)->get()->toArray();
-//                    $field->value = $data;
-//                },
-//
-//                'afterSave' => function ($field) {
-//
-//                }
-//            ];
-
-            return $fields;
+            //            $fields['skus'] = [
+            //                'class' => DivField::class,
+            //                'func' => 'productAdminSkus',
+            //                'canApply' => false,
+            //                'getInputAttributes' => function ($field) {
+            //                    $product = $field->instance;
+            //
+            //                    return [
+            //                        'data-selected-params' => json_encode($product->getSkuParams()),
+            //                    ];
+            //                },
+            //
+            //                'fetchData' => function ($field) {
+            //                    $data = Sku::with('skuAttributes')->where('product_id', $field->instance->id)->get()->toArray();
+            //                    $field->value = $data;
+            //                },
+            //
+            //                'afterSave' => function ($field) {
+            //
+            //                }
+            //            ];
         }
+
+        return $fields;
+    }
+
+    public function rules()
+    {
+        return [
+            ['product_type_id', 'required'],
+        ];
     }
 
     public function afterSave()
