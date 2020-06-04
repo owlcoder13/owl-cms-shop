@@ -13,8 +13,11 @@ class BaseController extends Controller
 
     public function index(Request $request)
     {
-        $model = $this->modelClass::all();
-        return view('cms-shop::admin.shop.' . $this->baseName . '.index', ['model' => $model]);
+        $modelClass = $this->modelClass;
+        $model = $modelClass::all();
+        return view('cms-shop::admin.shop.' . $this->baseName . '.index', [
+            'model' => $model
+        ]);
     }
 
     public function update(Request $request)
@@ -54,6 +57,11 @@ class BaseController extends Controller
     public function delete(Request $request)
     {
         $model = $this->modelClass::find($request->route('id'));
-        return redirect(route('cms-shop.admin.' . $this->baseName . '.index'));
+
+        if ($model) {
+            $model->delete();
+        }
+
+        return redirect(route('cms-shop.' . $this->baseName . '.index'));
     }
 }

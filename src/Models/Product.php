@@ -200,4 +200,26 @@ class Product extends BaseModel
 
     }
 
+    public static function boot()
+    {
+        parent::boot();
+
+        self::deleting(function ($model) {
+            foreach (ProductAttribute::where('product_id', $model->id)->get() as $pa) {
+                $pa->delete();
+            }
+
+            foreach (ProductImage::where('product_id', $model->id)->get() as $pa) {
+                $pa->delete();
+            }
+
+            foreach (Sku::where('product_id', $model->id)->get() as $pa) {
+                $pa->delete();
+            }
+
+            foreach (ProductCategoryBinding::where('product_id', $model->id)->get() as $pa) {
+                $pa->delete();
+            }
+        });
+    }
 }
